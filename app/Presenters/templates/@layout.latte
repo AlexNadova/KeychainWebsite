@@ -4,13 +4,22 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width">
 
-	<title>{ifset title}{include title|stripHtml} | {/ifset}Nette Web</title>
+	<link rel="stylesheet" href="{$basePath}/style/styles.css">
+	<link href="{$basePath}\font\open-sans.css" rel="stylesheet">
+
+	<script src="{$basePath}/js/scripts.js"></script>
+	<script src="{$basePath}/js/jquery.js"></script>
+	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
+
+	<title>{ifset title}{include title|stripHtml} | {/ifset}Peachenka</title>
 </head>
 
 <body>
-	<div n:foreach="$flashes as $flash" n:class="flash, $flash->type">{$flash->message}</div>
-
 	{include content}
+
+	{foreach $flashes as $flash}
+		<div class="flash flash-{$flash->type}">{$flash->message}</div>
+	{/foreach}
 
 	{block scripts}
 	<script src="https://nette.github.io/resources/js/3/netteForms.min.js"></script>
