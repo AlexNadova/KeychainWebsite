@@ -34,8 +34,20 @@
 			</form>
 		</div>
 		<div class="registration__col registration__col--right">
+			<h2 class="registration__title">LOG IN</h2>
+			<form n:name="loginForm" class="registration__form">
+				<div class="registration__form-item">
+					<label n:name="email" class="registration__item-label">Email:</label>
+					<input n:name="email" type="email" title="Email is required."/>
+				</div>
+				<div class="registration__form-item">
+					<label n:name="password" class="registration__item-label">Password:</label>
+					<input n:name="password" type="password" title="Password is required."/>
+					<img class="password__eye" src="{$basePath}/img/password-eye.png">
+				</div>
+				<button n:name="login" class="button registration__button">LOGIN</button>
+			</form>
 		</div>
-
     </div>
 </div>
 

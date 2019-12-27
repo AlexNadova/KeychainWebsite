@@ -13,5 +13,6 @@ session:
 
 services:
 	router: App\Router\RouterFactory::createRouter
+	authenticator: App\UserAuthenticator
 	- App\HttpMethods\HttpMethods
 

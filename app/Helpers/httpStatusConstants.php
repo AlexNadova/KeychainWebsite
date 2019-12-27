@@ -2,6 +2,14 @@
 
 namespace App\Helpers;
 
+/**
+ *  Summary 
+ *  Helper class with http status code constants.
+ * 
+ *  @author Alexandra Nadova <alexandranadova@gmail.com>
+ *  @access public
+ *  @since 37:register account
+ */
 class HttpStatus{
 	const STATUS_OK = 200;
 	const STATUS_CREATED = 201;
