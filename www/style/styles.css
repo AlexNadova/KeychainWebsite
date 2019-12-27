@@ -1,0 +1,193 @@
+html,
+body {
+  height: 100%;
+  min-height: 550px;
+  margin: 0;
+  padding: 0;
+  font-family: "Open Sans", sans-serif;
+  color: #272727;
+}
+input:focus:invalid {
+  border: solid 1px #db0524;
+}
+.flash {
+  z-index: 101;
+  position: fixed;
+  bottom: 0;
+  left: 30px;
+  padding: 5px 10px;
+  font-size: 14px;
+  max-width: 500px;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+  animation: slideUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.5s both, disappear 1s 5s forwards;
+}
+.flash-info {
+  background: #2f4b7e;
+  color: white;
+}
+.flash-alert {
+  background: #fde400;
+}
+.flash-denied {
+  background: #fdad00;
+  color: white;
+}
+.flash-error {
+  color: white;
+  background: #db0524;
+}
+.flash-success {
+  color: white;
+  background: #1ba75b;
+}
+@keyframes disappear {
+  to {
+    visibility: hidden;
+  }
+}
+@keyframes slideUp {
+  0% {
+    -webkit-transform: translateY(100px);
+    transform: translateY(100px);
+  }
+  100% {
+    -webkit-transform: translateY(0);
+    transform: translateY(0);
+  }
+}
+.password__input {
+  position: relative;
+  cursor: default;
+}
+.password__eye {
+  position: relative;
+  z-index: 1;
+  width: 17px;
+  height: 11px;
+  cursor: pointer;
+  float: right;
+  top: -18px;
+  right: 10px;
+}
+.registration__container {
+  text-align: center;
+  height: 100%;
+  background-color: #263963;
+  min-width: 150px;
+}
+@media screen and (max-width: 650px) {
+  .registration__container {
+    min-height: 750px;
+  }
+}
+.registration__line {
+  display: flex;
+  background: #f7f7f7;
+  border: 0.5px solid #aaa;
+  border-radius: 5px;
+  max-width: 1000px;
+  margin: 0 auto;
+  position: relative;
+  top: 50%;
+  -ms-transform: translateY(-50%);
+  transform: translateY(-50%);
+  width: 90%;
+}
+@media screen and (max-width: 650px) {
+  .registration__line {
+    display: block;
+    -ms-transform: unset;
+    transform: unset;
+    top: 20px;
+    width: 80%;
+  }
+}
+.registration__col {
+  flex: 2;
+  max-width: 470px;
+}
+.registration__col--left {
+  padding: 0 30px 20px 20px;
+  border-right: 0.2px solid #aaa;
+}
+@media screen and (max-width: 650px) {
+  .registration__col--left {
+    border-right: unset;
+    border-bottom: 0.2px solid #aaa;
+  }
+}
+.registration__col--right {
+  padding: 0 20px 20px 30px;
+}
+@media screen and (max-width: 650px) {
+  .registration__col {
+    padding: 0 20px;
+    margin: 0 auto;
+  }
+}
+@media screen and (max-width: 350px) {
+  .registration__col {
+    padding: unset;
+  }
+}
+.registration__title {
+  font-size: 30px;
+  font-weight: 200;
+  margin: 20px auto 10px;
+}
+@media screen and (max-width: 650px) {
+  .registration__title {
+    font-size: 26px;
+    margin-bottom: 0;
+  }
+}
+.registration__logo {
+  height: auto;
+  width: auto;
+  margin: auto;
+  position: relative;
+  margin-top: 100px;
+}
+@media screen and (max-width: 280px) {
+  .registration__logo {
+    width: 80%;
+  }
+}
+.registration__form {
+  padding: 15px;
+}
+.registration__form-item {
+  margin-bottom: 7px;
+}
+.registration__form-item input {
+  border: 1px solid #aaa;
+  border-radius: 3px;
+  background-color: white;
+  padding: 3px;
+  box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.1);
+  width: 96%;
+  font-family: "Open Sans", sans-serif;
+  cursor: pointer;
+}
+.registration__item-label {
+  margin: 5px 0 0 4px;
+  float: left;
+}
+.registration__button {
+  margin: 20px auto 10px;
+  padding: 7px 0;
+  display: block;
+  background-color: #1ba75b;
+  border: 1px solid #1ba75b;
+  color: white;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  width: 98%;
+}
+.registration__button:hover {
+  background: #108145;
+  border: 1px solid #108145;
+  color: white;
+}

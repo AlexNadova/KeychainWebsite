@@ -1,0 +1,55 @@
+{block content}
+{block title}
+	<title>Registration</title>
+{/block}
+<div class="registration__container">
+    <!-- <img class="registration__logo" src="{$basePath}/img/bidding-tools_logo.png"> -->
+    <div class="registration__line">
+		<div class="registration__col registration__col--left">
+			<h2 class="registration__title">SIGN IN</h2>
+			<form n:name="registrationForm" class="registration__form">
+				<div class="registration__form-item">
+					<label n:name="name" class="registration__item-label">Name:</label>
+					<input n:name="name" type="text" title="Name is required and has to have 2 to 17 letters."/>
+				</div>
+				<div class="registration__form-item">
+					<label n:name="surname" class="registration__item-label">Surname:</label>
+					<input n:name="surname" type="text" title="Surname is required and has to have 2 to 17 letters."/>
+				</div>
+				<div class="registration__form-item">
+					<label n:name="email" class="registration__item-label">Email:</label>
+					<input n:name="email" type="email" title="Email is required and has to be in valid form (e.g. xxx@website.com)."/>
+				</div>
+				<div class="registration__form-item">
+					<label n:name="password" class="registration__item-label">Password:</label>
+					<input n:name="password" type="password" class="password__input" title="Password is required, it has to be at least 8 characters long and has to contain at least one uppercase and one lowercase letter and one number."/>
+					<img class="password__eye" src="{$basePath}/img/password-eye.png">
+				</div>
+				<div class="registration__form-item">
+					<label n:name="c_password" class="registration__item-label">Repeat password:</label>
+					<input n:name="c_password" type="password" class="password__input" title="Password repeat has to match password."/>
+					<img class="password__eye" src="{$basePath}/img/password-eye.png">
+				</div>
+				<button n:name="register" class="button registration__button">REGISTER</button>
+			</form>
+		</div>
+		<div class="registration__col registration__col--right">
+		</div>
+
+    </div>
+</div>
+
+{/block}
+
+{block scripts}
+<script>
+ 	$(document).ready(function () {
+    	$(".password__eye").mousedown(function () {
+        	$(".password__input").prop("type", "text");
+    	});
+    	$(".password__eye").mouseup(function () {
+        	$(".password__input").prop("type", "password");
+    	});
+  	});
+</script>
+{/block}
