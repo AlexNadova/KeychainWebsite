@@ -1,0 +1,71 @@
+{block content}
+<div class="header-left__container" id="js-sidebar">
+	<div class="header-left__section">
+		<div class="header-left__item">
+			All items
+		</div>
+	</div>
+	<div class="header-left__section">
+		<div class="header-left__item">
+			Passwords
+		</div>
+		<div class="header-left__item">
+			Notes
+		</div>
+	</div>
+	<div class="header-left__section">
+		<div class="header-left__item">
+			Payment cards
+		</div>
+		<div class="header-left__item">
+			Bank information
+		</div>
+	</div>
+	<div class="header-left__section">
+		<div class="header-left__item">
+			Licenses
+		</div>
+	</div>
+	<div class="header-left__section">
+		<div class="header-left__name">
+			User's cathegories:
+		</div>
+		<div class="header-left__item header-left__item-user">
+			Cathegory1
+		</div>
+		<div class="header-left__item header-left__item-user">
+			Cathegory2
+		</div>
+	</div>
+</div>
+<div class="header-left__show-sidebar" id="js-show-sidebar">...</div>
+{/block}
+
+{block scripts}
+<script>
+	function showSidebar(x) {
+		if (x.matches) { // If media query matches
+			$("#js-sidebar").show();
+			$("#js-show-sidebar").attr("style", "margin-left: 171px;");
+		}else{
+			$("#js-sidebar").hide();
+			$("#js-show-sidebar").attr("style", "margin-left: 0;");
+		}
+	}
+ 	$(document).ready(function () {
+		var x = window.matchMedia("(min-width: 526px)")
+		showSidebar(x) // Call listener function at run time
+		x.addListener(showSidebar) // Attach listener function on state changes
+
+		$("#js-show-sidebar").click(function () {
+			if($("#js-sidebar").css("display") == "block"){
+				$("#js-sidebar").hide();
+				$("#js-show-sidebar").attr("style", "margin-left: 0;");
+    		}else{
+				$("#js-sidebar").show();
+				$("#js-show-sidebar").attr("style", "margin-left: 171px;");
+			}
+		});
+  	});
+</script>
+{/block}

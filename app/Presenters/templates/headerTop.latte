@@ -1,0 +1,65 @@
+{block content}
+<div class="header-top__container">
+	<div class="header-top__section header-top__section-logo">
+		<img class="header-top__section-logo-icon" src="{$basePath}/img/bidding-tools_logo.png">
+	</div>
+	<div class="header-top__section-user-menu">
+		<div class="header-top__section-user-menu-email">{$email}</div>
+		<div class="header-top__section-user-menu-item header-top__section-user-menu-profile">Profile</div
+		><div class="header-top__section-user-menu-item header-top__section-user-menu-logout">Logout</div>
+	</div>
+	<div class="header-top__section header-top__section-search">
+		<input type="text" placeholder="Search"/>
+	</div>
+	<div class="header-top__section header-top__section-user">
+		<div class="header-top__section-user-email">
+			{$email}
+		</div>
+		<img class="header-top__section-user-icon" id="js-user" src="{$basePath}/img/user.png">
+	</div>
+	<div class="header-top__section-user-options" id="js-user-options">
+		<div class="header-top__section-user-options-email">{$email}</div>
+		<div class="header-top__section-user-options-item header-top__section-user-options-profile">Profile</div>
+		<div class="header-top__section-user-options-item header-top__section-user-options-logout">Logout</div>
+	</div>
+</div>
+{/block}
+
+{block scripts}
+<script>
+	// function changeID(x) {
+	// 	if (x.matches) { // If media query matches
+	// 		$("#js-user-options").attr("id", "js-temp");
+	// 		$("#js-temp").show();
+	// 		console.log('1');
+	// 	}else{
+	// 		$("#js-temp").attr("id", "js-user-options");
+	// 		$("js-user-options").hide();
+	// 		console.log('2');
+	// 	}
+	// }
+ 	$(document).ready(function () {
+		// var x = window.matchMedia("(max-width: 363px)")
+		// changeID(x) // Call listener function at run time
+		// x.addListener(changeID) // Attach listener function on state changes
+
+		$("#js-user").hover(function () {
+			if($("#js-user-options").css("display") == "block"){
+				$("#js-user-options").hide();
+			console.log('3');
+    		}else{
+				$("#js-user-options").show();
+			console.log('4');
+			}
+		});
+		$("#js-user-options").mouseenter(function () {
+			$("#js-user-options").show();
+			console.log('5');
+		});
+		$("#js-user-options").mouseleave(function () {
+			$("#js-user-options").hide();
+			console.log('6');
+		});
+  	});
+</script>
+{/block}
