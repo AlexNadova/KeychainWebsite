@@ -1,0 +1,60 @@
+{block content}
+<div class="logins__container">
+	<div class="logins__line">
+		<div class="logins__col logins__col--left">
+			{include '../headerLeft.latte'}
+		</div>
+    	<div class="logins__col logins__col--right">
+			{include '../headerTop.latte'}
+			<div class="logins__list-container">
+				<div class="logins__list-to-top" id="js-to-top">
+					<a href="#top">
+						<img class="logins__list-to-top-icon" src="{$basePath}/img/arrow-top.png" alt="">
+					</a>
+				</div>
+				{foreach $logins as $login}
+					<a n:href="Logins:login" class="logins__list-item">
+						<div class="list-item__col list-item__col--left">
+							<img class="list-item__col-logo" onerror="getLogo(this)" src="https://logo.clearbit.com/{$login->domain}" alt="">
+						</div>
+						<div class="list-item__col list-item__col--right">
+							<div class="list-item__col-website">{$login->website_name}</div>
+							<div class="list-item__col-username">{$login->username}</div>
+						</div>
+					</a>
+				{/foreach}
+			</div>
+		</div>
+  	</div>
+</div>
+{/block}
+
+{block scripts}
+<script>
+    $(document).ready(function() {
+        $(window).scroll(function() {
+            if($(document).scrollTop() > 120) {
+                $('#js-to-top').fadeIn(200);
+            }
+            else {
+                $('#js-to-top').fadeOut(200);
+            }
+        });
+    });
+
+	function getLogo(elem){
+		elem.onerror=null;
+		index = Math.floor(Math.random() * 7) + 1;
+		switch(index){
+			case 1: color = 'blue'; break;
+			case 2: color = 'green'; break;
+			case 3: color = 'pink'; break;
+			case 4: color = 'red'; break;
+			case 5: color = 'yellow'; break;
+			case 6: color = 'orange'; break;
+			case 7: color = 'purple'; break;
+		}
+		elem.src={$basePath}+'/img/logins-logos/'+color+'.png'
+	}
+</script>
+{/block}
