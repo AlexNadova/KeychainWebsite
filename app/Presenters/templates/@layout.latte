@@ -12,6 +12,13 @@
 	<script type="text/javascript" src="{$basePath}/js/netteForms.js"></script>
 
 	<title>{ifset title}{include title|stripHtml} | {/ifset}Peachenka</title>
+	{if $presenter->isLinkCurrent("Verification:default")}
+		<style>
+			html, body{
+				height: 100%;
+			}
+		</style>
+	{/if}
 </head>
 
 <body>

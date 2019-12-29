@@ -20,6 +20,7 @@ use App\UserAuthenticator;
  *  @access public
  *  @since 37:register to account
  *  @since 38:login to account: login code added
+ *  @since 57:headers: added actionVerification() function
  */
 final class VerificationPresenter extends Nette\Application\UI\Presenter
 {
@@ -36,6 +37,17 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 	{
 		$this->httpMethods = $httpMethods;
 		$this->authenticator = $authenticator;
+	}
+
+	/**
+	 *  if user is logged in, redirect him to his profile
+ 	 *  @since 57:user profile
+	 * 	@return void
+	 */
+	public function actionDefault(): void{
+		if($this->getUser()->isLoggedIn()){
+			$this->redirect('User:profile');
+		}
 	}
 
 	//--------------------------------------------REGISTRATION--------------------------------------------
@@ -142,7 +154,7 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 			$this->redirect("this");
 		}
 		$this->flashMessage('Login successful.', 'success');
-		// TO-DO: redirect to user page
-		$this->redirect('this');
+		// redirect to user page
+		$this->redirect('User:profile');
 	}
 }

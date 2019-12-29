@@ -58,7 +58,7 @@ class UserAuthenticator implements IAuthenticator
 		//http code of response
 		$httpCode = $data['info']['http_code'];
 		//message from response
-		$response = json_decode($data['response']);
+		$response = $data['response'];
 		//if 401 throw exception with error message
 		if ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			throw new AuthenticationException($response->error);
@@ -72,7 +72,7 @@ class UserAuthenticator implements IAuthenticator
 		$userData = $this->httpMethods->get($token, $this->route . '/user');
 		//get http code and response message
 		$httpCode = $data['info']['http_code'];
-		$response = json_decode($userData['response']);
+		$response = $userData['response'];
 		//if 401 throw exception with error message
 		if ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			throw new AuthenticationException($response->error);
@@ -83,6 +83,6 @@ class UserAuthenticator implements IAuthenticator
 		//get user from response
 		$user = $response->data;
 		//create and return new Identity for user with id, email and token
-        return new Identity($user->id, ['email' => $user->email, 'token' => $token]);
+        return new Identity($user->id, null, ['email' => $user->email, 'token' => $token]);
     }
 }

@@ -10,6 +10,7 @@ namespace App\HttpMethods;
  *  @access public
  *  @since 37:register to account
  *  @since 38:login to account: added get function
+ *  @since 57:headers: response decoded here instead of presenters
  */
 class HttpMethods
 {
@@ -38,8 +39,9 @@ class HttpMethods
 			'Content-Length: ' . strlen($jsonData),
 			'Accept: application/json'
 		));
-		//execute cURL request and save result
+		//execute cURL request and save result and decode it
 		$response['response'] = curl_exec($ch);
+		$response['response'] = json_decode($response['response']);
 		//get info about result
 		$response['info'] = curl_getinfo($ch);
 		//close cURL request
@@ -67,6 +69,7 @@ class HttpMethods
 			'Authorization: Bearer ' . $token
 		));
 		$response['response'] = curl_exec($ch);
+		$response['response'] = json_decode($response['response']);
 		$response['info'] = curl_getinfo($ch);
 		curl_close($ch);
 		return $response;
