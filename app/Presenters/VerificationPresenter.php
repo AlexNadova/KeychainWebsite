@@ -17,7 +17,6 @@ use App\UserAuthenticator;
  * 	registration and login forms and deciding what to do when forms are submitted.
  * 
  *  @author Alexandra Nadova <alexandranadova@gmail.com>
- *  @access public
  *  @since 37:register to account
  *  @since 38:login to account: login code added
  *  @since 57:headers: added actionVerification() function
@@ -46,7 +45,7 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 	 */
 	public function actionDefault(): void{
 		if($this->getUser()->isLoggedIn()){
-			$this->redirect('User:profile');
+			$this->redirect('Logins:default');
 		}
 	}
 
@@ -54,6 +53,7 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 
 	/**
 	 *  create registration form
+ 	 *  @since 37:register to account
 	 * 	@return Form
 	 */
 	public function createComponentRegistrationForm(): Form
@@ -82,6 +82,7 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 
 	/**
 	 *  if registration form was submitted successfully
+ 	 *  @since 37:register to account
 	 *  @param Form $form, Nette\Utils\ArrayHash $values
 	 * 	@return void
 	 */
@@ -155,6 +156,6 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 		}
 		$this->flashMessage('Login successful.', 'success');
 		// redirect to user page
-		$this->redirect('User:profile');
+		$this->redirect('Logins:default');
 	}
 }

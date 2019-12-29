@@ -11,9 +11,9 @@
   &__line {
     display: flex;
     background: @light-background;
-    border: 0.5px solid @border-color;
+    border: 0.5px solid @light-grey-a;
     border-radius: 5px;
-    max-width: 1000px;
+    max-width: 800px;
     margin: 0 auto;
     position: relative;
     top: 50%;
@@ -33,10 +33,10 @@
     max-width: 470px;
     &--left {
       padding: 0 30px 20px 20px;
-      border-right: 0.2px solid @border-color;
+      border-right: 0.2px solid @light-grey-a;
       @media screen and (max-width: 650px) {
         border-right: unset;
-        border-bottom: 0.2px solid @border-color;
+        border-bottom: 0.2px solid @light-grey-a;
       }
     }
     &--right {
@@ -70,12 +70,12 @@
     }
   }
   &__form {
-    padding: 15px;
+    padding: 0 15px;
   }
   &__form-item {
-    margin-bottom: 7px;
+    margin-bottom: 4px;
     input {
-      border: 1px solid @border-color;
+      border: 1px solid @light-grey-a;
       border-radius: 3px;
       background-color: white;
       padding: 3px;
