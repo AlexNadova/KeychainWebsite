@@ -687,16 +687,20 @@ input:focus:invalid {
   text-decoration: none;
   cursor: pointer;
   background-color: #1ba75b;
+  border: 1px solid #1ba75b;
 }
 .logins__button:hover {
   background-color: #108145;
+  border: 1px solid #108145;
   color: white;
 }
 .logins__button--red {
   background-color: #db0524;
+  border: 1px solid #db0524;
 }
 .logins__button--red:hover {
   background-color: #b3051f;
+  border: 1px solid #b3051f;
   color: white;
 }
 .logins__button--grey {

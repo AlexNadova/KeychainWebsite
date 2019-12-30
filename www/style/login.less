@@ -52,15 +52,19 @@
     border-radius: 1px;
     text-decoration: none;
     cursor: pointer;
-    background-color: @button-green;
+	background-color: @button-green;
+	border: 1px solid @green-color;
     &:hover {
-      background-color: @button-green-hover;
+	  background-color: @button-green-hover;
+	  border: 1px solid @button-green-hover;
       color: white;
     }
     &--red {
-      background-color: @button-red;
+	  background-color: @button-red;
+	  border: 1px solid @red-color;
       &:hover {
-        background-color: @button-red-hover;
+		background-color: @button-red-hover;
+        border: 1px solid @button-red-hover;
         color: white;
       }
     }

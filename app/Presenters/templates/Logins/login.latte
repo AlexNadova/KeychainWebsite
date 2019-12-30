@@ -10,29 +10,30 @@
 				<form n:name="loginForm" class="logins__form">
 					<div class="logins__form-item">
 						<label n:name="websiteName" class="logins__form-item-label">Website name:</label>
-						<input n:name="websiteName" type="text" class="editable" value="{$login->website_name}"/>
+						<input n:name="websiteName" type="text" class="editable" value="{$login->website_name}" disabled/>
 					</div>
 					<div class="logins__form-item">
 						<label n:name="websiteAddress" class="logins__form-item-label">Website address:</label>
-						<input n:name="websiteAddress" type="text" class="editable" value="{$login->website_address}"/>
+						<input n:name="websiteAddress" type="text" class="editable" value="{$login->website_address}" disabled/>
 					</div>
 					<div class="logins__form-item">
 						<label n:name="username" class="logins__form-item-label">Username:</label>
-						<input n:name="username" type="text" class="editable" value="{$login->username}"/>
+						<input n:name="username" type="text" class="editable" value="{$login->username}" disabled/>
 					</div>
 					<div class="logins__form-item">
 						<label n:name="password" class="logins__form-item-label">Password:</label>
-						<input n:name="password" type="password" id="js-password"class="password__input editable" value="{$login->password}"/>
+						<input n:name="password" type="password" id="js-password" class="password__input editable" value="{$login->password}" disabled/>
 						<!-- <img class="password__eye" src="{$basePath}/img/password-eye.png"> -->
-						<div class="logins__button" onclick="copyPassword()">Copy password</div>
+						<div class="logins__button logins__button--grey" onclick="copyPassword()">Copy</div>
+						<div class="logins__button logins__button--grey" id="js-show-pswrd-btn" onclick="showPassword()">Show</div>
 					</div>
 					<div class="logins__form-item">
 						<label n:name="createdAt" class="logins__form-item-label">Created at:</label>
-						<input n:name="createdAt" type="text" value="{$login->created_at}"/>
+						<input n:name="createdAt" type="text" value="{$login->created_at}" disabled/>
 					</div>
 					<div class="logins__form-item">
 						<label n:name="updatedAt" class="logins__form-item-label">Updated at:</label>
-						<input n:name="updatedAt" type="text" value="{$login->updated_at}"/>
+						<input n:name="updatedAt" type="text" value="{$login->updated_at}" disabled/>
 					</div>
 					<div class="logins__form-buttons">
 						<div class="button logins__button" id="js-show-btn" onclick="editMode()">EDIT</div>
@@ -61,18 +62,27 @@
  	function editMode() {
 		if($("#js-show-btn").html() === "EDIT"){
 			$("#js-show-btn").html("CANCEL");
+			$("#js-show-btn").toggleClass('logins__button--grey');
 			$(".editable").attr("style", "border-bottom: 1px solid #aaa;");
 			$(".editable").prop('disabled', false);
-			$("#js-show-btn").toggleClass('logins__button--red');
 			$("#js-update-btn").prop('disabled', false);
 			$("#js-update-btn").show();
     	}else{
 			$("#js-show-btn").html("EDIT");
+			$("#js-show-btn").toggleClass('logins__button--grey');
 			$(".editable").attr("style", "border-bottom: none;");
 			$(".editable").prop('disabled', true);
-			$("#js-show-btn").toggleClass('logins__button--red');
 			$("#js-update-btn").hide();
 			$("#js-update-btn").prop('disabled', true);
+		}
+	}
+	function showPassword() {
+		if($("#js-show-pswrd-btn").html() === "SHOW"){
+			$("#js-show-pswrd-btn").html("HIDE");
+        	$("#js-password").prop("type", "password");
+    	}else{
+			$("#js-show-pswrd-btn").html("SHOW");
+        	$("#js-password").prop("type", "text");
 		}
 	}
 	function showDeleteWindow(){
