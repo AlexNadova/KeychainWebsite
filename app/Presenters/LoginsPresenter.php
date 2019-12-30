@@ -26,6 +26,8 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 	/** @var string $route */
 	public $route = 'http://127.0.0.1:8000/api/v1/logins';
 
+	private $login;
+
 	function __construct(HttpMethods $httpMethods)
 	{
 		$this->httpMethods = $httpMethods;
@@ -35,22 +37,24 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 
 	/**
 	 *  if user is not logged in, redirect him to registration/login page
-     *  @since 36: get all logins
+	 *  @since 36: get all logins
 	 * 	@return void
 	 */
-	public function actionDefault(): void{
-		if(!$this->getUser()->isLoggedIn()){
+	public function actionDefault(): void
+	{
+		if (!$this->getUser()->isLoggedIn()) {
 			$this->flashMessage('You need to be logged in to access this page.', 'denied');
 			$this->redirect('Verification:default');
 		}
 	}
-	
+
 	/**
 	 *  render list of logins to template
- 	 *  @since 36: get all logins
+	 *  @since 36: get all logins
 	 * 	@return void
 	 */
-	public function renderDefault(): void{
+	public function renderDefault(): void
+	{
 		$user = $this->getUser();
 		$this->template->email = $user->getIdentity()->email;
 		$this->template->logins = $this->getLogins($user->getIdentity()->token, $user);
@@ -64,7 +68,8 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 	 *  @param \Nette\Security\User $user - in case of logout
 	 * 	@return array - array of login objects | array - empty
 	 */
-	public function getLogins($token, $user): array{
+	public function getLogins($token, $user): array
+	{
 		//get logins from API
 		$response = $this->httpMethods->get($token, $this->route);
 		$responseBody = $response['response'];
@@ -73,7 +78,7 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		if ($httpCode === HttpStatus::STATUS_OK) {
 			$logins = $responseBody->data;
 			//logins are paginated so its possible that several Get requests need to be made
-			while (!is_null($responseBody->next_page_url)){
+			while (!is_null($responseBody->next_page_url)) {
 				$response = $this->httpMethods->get($token, $responseBody->next_page_url);
 				$responseBody = $response['response'];
 				//merge response login array to $logins
@@ -81,11 +86,11 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 				$responseBody = $response['response'];
 			}
 			return $logins;
-		}elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			$user->logout();
 			$this->flashMessage('You need to be logged in to access this page.', 'denied');
 			$this->redirect('Verification:default');
-		}else {
+		} else {
 			return [];
 		}
 	}
@@ -94,26 +99,21 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 
 	/**
 	 *  if user is not logged in, redirect him to registration/login page
-     *  @since 35: get login by id
+	 * 	@param string $id - login's id
+	 *  @since 35: get login by id
+	 *  @since 29: update login: code remade to us $this->login
 	 * 	@return void
 	 */
-	public function actionLogin(): void{
-		if(!$this->getUser()->isLoggedIn()){
+	public function actionLogin($id): void
+	{
+		if (!$this->getUser()->isLoggedIn()) {
 			$this->flashMessage('You need to be logged in to access this page.', 'denied');
 			$this->redirect('Verification:default');
 		}
-	}
-
-	/**
-	 *  render specific login
-	 *  @since 35: get login by id 
-	 *  @param int $id - login's id to get all its data 
-	 * 	@return void
-	 */
-	public function renderLogin($id): void{
 		$user = $this->getUser();
 		$this->template->email = $user->getIdentity()->email;
-		$this->template->login = $this->getLoginById($user->getIdentity()->token, $user, $id);
+		$this->login = $this->getLoginById($user->getIdentity()->token, $user, $id);
+		$this->template->login = $this->login;
 	}
 
 	/**
@@ -125,18 +125,19 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 	 * 	@return stdClass {id, user_id, website_name, website_address, 
 	 * 		username, password, created_at, updated_at}
 	 */
-	public function getLoginById($token, $user, $id): stdClass {
+	public function getLoginById($token, $user, $id): stdClass
+	{
 		//get logins from API
 		$response = $this->httpMethods->get($token, $this->route . '/' . $id);
 		$httpCode = $response['info']['http_code'];
 		if ($httpCode === HttpStatus::STATUS_OK) {
 			$login = $response['response']->data;
 			return $login;
-		}elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			$user->logout();
 			$this->flashMessage('You need to be logged in to access this page.', 'denied');
 			$this->redirect('Verification:default');
-		}else {
+		} else {
 			$this->flashMessage('Cannot render login.', 'error');
 			$this->redirect('Logins:default');
 		}
@@ -167,6 +168,35 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
+	/**
+	 *  if login form was submitted successfully update login's data
+	 *  @param Form $form, Nette\Utils\ArrayHash $values
+	 * 	@return void
+	 *  @since 29: update login
+	 */
 	public function loginFormSuccess(Form $form, $values): void
-	{ }
+	{
+		$user = $this->getUser();
+		$token = $user->getIdentity()->token;
+		$id = $this->login->id;
+
+		$updatedLogin = array(
+			'website_name' => $values->websiteName,
+			'website_address' => $values->websiteAddress,
+			'username' => $values->username,
+			'password' => $values->password,
+		);
+		$data = $this->httpMethods->put($token, $this->route . '/' . $id, $updatedLogin);
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$this->flashMessage($httpCode . ': Update successful.', 'success');
+			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
+			$this->flashMessage($httpCode . ': ' . json_decode($data['response']->errors), 'error');
+			$this->redirect('this');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('this');
+		}
+	}
 }

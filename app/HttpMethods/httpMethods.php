@@ -11,6 +11,7 @@ namespace App\HttpMethods;
  *  @since 37:register to account
  *  @since 38:login to account: added get function
  *  @since 57:headers: response decoded here instead of presenters
+ *  @since 29:update login: added put function
  */
 class HttpMethods
 {
@@ -72,6 +73,38 @@ class HttpMethods
 		$response['response'] = json_decode($response['response']);
 		$response['info'] = curl_getinfo($ch);
 		curl_close($ch);
+		return $response;
+	}
+
+	/**
+	 *  update resorce with given $data, return response and info about response
+	 *  @param string $token - token used in Authorization header needed to access API's functionalities
+	 *  @param string $route - string route that $data is sent to
+	 *  @param array $updatedData - updated data to be sent
+	 * 	@return array - array of response and info about response
+	 *  @see post function for more detailed documentation
+	 *  @since 29: update login
+	 */
+	public function put($token, $route, $updatedData): array
+	{
+		$jsonData = json_encode($updatedData);
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $route);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		//add access token to headers
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Accept: application/json',
+			'Authorization: Bearer ' . $token
+		));
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "PUT");
+		curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+		
+		$response['response'] = curl_exec($ch);
+		$response['response'] = json_decode($response['response']);
+		$response['info'] = curl_getinfo($ch);
+		curl_close($ch);
+
 		return $response;
 	}
 }
