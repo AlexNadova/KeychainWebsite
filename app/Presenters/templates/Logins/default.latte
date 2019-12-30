@@ -13,7 +13,7 @@
 					</a>
 				</div>
 				{foreach $logins as $login}
-					<a n:href="Logins:login" class="logins__list-item">
+					<a n:href="Logins:login id=>$login->id" class="logins__list-item">
 						<div class="list-item__col list-item__col--left">
 							<img class="list-item__col-logo" onerror="getLogo(this)" src="https://logo.clearbit.com/{$login->domain}" alt="">
 						</div>

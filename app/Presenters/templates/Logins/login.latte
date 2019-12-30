@@ -1,2 +1,93 @@
 {block content}
+<div class="logins__container">
+	<div class="logins__line">
+		<div class="logins__col logins__col--left">
+			{include '../headerLeft.latte'}
+		</div>
+    	<div class="logins__col logins__col--right">
+			{include '../headerTop.latte'}
+			<div class="logins__card">
+				<form n:name="loginForm" class="logins__form">
+					<div class="logins__form-item">
+						<label n:name="websiteName" class="logins__form-item-label">Website name:</label>
+						<input n:name="websiteName" type="text" class="editable" value="{$login->website_name}"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="websiteAddress" class="logins__form-item-label">Website address:</label>
+						<input n:name="websiteAddress" type="text" class="editable" value="{$login->website_address}"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="username" class="logins__form-item-label">Username:</label>
+						<input n:name="username" type="text" class="editable" value="{$login->username}"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="password" class="logins__form-item-label">Password:</label>
+						<input n:name="password" type="password" id="js-password"class="password__input editable" value="{$login->password}"/>
+						<!-- <img class="password__eye" src="{$basePath}/img/password-eye.png"> -->
+						<div class="logins__button" onclick="copyPassword()">Copy password</div>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="createdAt" class="logins__form-item-label">Created at:</label>
+						<input n:name="createdAt" type="text" value="{$login->created_at}"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="updatedAt" class="logins__form-item-label">Updated at:</label>
+						<input n:name="updatedAt" type="text" value="{$login->updated_at}"/>
+					</div>
+					<div class="logins__form-buttons">
+						<div class="button logins__button" id="js-show-btn" onclick="editMode()">EDIT</div>
+						<div class="button logins__button logins__button--red" id="js-delete-btn" onclick="showDeleteWindow()">DELETE</div>
+						<button n:name="update" id="js-update-btn" class="button logins__button logins__button--update">UPDATE</button>
+					</div>
+				</form>
+			</div>
+		</div>
+  	</div>
+</div>
+<div class="delete-window__background" id="js-delete-bg"></div>
+<div class="delete-window__container" id="js-delete-modal">
+	<div class="delete-window__line">
+		<div class="delete-window__text">
+			Do you really wish do delete this item?
+		</div>
+		<a n:href="Logins:deleteLogin id=>$login->id" class="logins__button logins__button--red">DELETE</a>
+		<div class="logins__button logins__button--grey" onclick="hideDeleteWindow()">CANCEL</div>
+	</div>
+</div>
+{/block}
+
+{block scripts}
+<script>
+ 	function editMode() {
+		if($("#js-show-btn").html() === "EDIT"){
+			$("#js-show-btn").html("CANCEL");
+			$(".editable").attr("style", "border-bottom: 1px solid #aaa;");
+			$(".editable").prop('disabled', false);
+			$("#js-show-btn").toggleClass('logins__button--red');
+			$("#js-update-btn").prop('disabled', false);
+			$("#js-update-btn").show();
+    	}else{
+			$("#js-show-btn").html("EDIT");
+			$(".editable").attr("style", "border-bottom: none;");
+			$(".editable").prop('disabled', true);
+			$("#js-show-btn").toggleClass('logins__button--red');
+			$("#js-update-btn").hide();
+			$("#js-update-btn").prop('disabled', true);
+		}
+	}
+	function showDeleteWindow(){
+		$("#js-delete-bg").show();
+		$("#js-delete-modal").show();
+	}
+	function hideDeleteWindow(){
+		$("#js-delete-modal").hide();
+		$("#js-delete-bg").hide();
+	}
+	function copyPassword(){
+		var password = document.getElementById("js-password");
+		password.select();
+		password.setSelectionRange(0, 99999)
+		document.execCommand("copy");
+	}
+</script>
 {/block}
