@@ -18,17 +18,20 @@
   }
   &__col {
     &--right {
-      flex: 4;
       margin-left: 210px;
+      width: -webkit-calc(100% - 210px);
+      width: -moz-calc(100% - 210px);
+      width: calc(100% - 210px);
       @media screen and (max-width: 525px) {
         margin-left: 0;
+        width: 100%;
       }
     }
   }
   &__list {
     &-container {
       overflow: hidden;
-      width: 95%;
+      width: 100%;
       margin: 20px auto 0;
       @media screen and (max-width: 363px) {
         margin-top: 10px;
@@ -45,13 +48,13 @@
       padding: 7px;
       top: 170px;
       display: none;
-	  z-index: 1;
-	  opacity: 70%;
-	  cursor: pointer;
-	  &:hover{
-		background-color: white;
-		opacity: 100%;
-	  }
+      z-index: 1;
+      opacity: 70%;
+      cursor: pointer;
+      &:hover {
+        background-color: white;
+        opacity: 100%;
+      }
       &-icon {
         max-width: 30px;
       }
@@ -112,11 +115,27 @@
       text-align: left;
       float: left;
       color: @dark-grey-5;
+      @media screen and (min-width: 1421px) {
+        max-width: 60%;
+      }
+      @media screen and (max-width: 1420px) and (min-width: 1161px) {
+        max-width: 50%;
+      }
+      @media screen and (max-width: 1160px) and (min-width: 621px) {
+        max-width: 45%;
+      }
       @media screen and (max-width: 740px) and (min-width: 621px) {
         margin: 15px 0 0 15px;
       }
       @media screen and (max-width: 620px) and (min-width: 363px) {
         margin: 15px 0 0;
+        max-width: 80%;
+      }
+      @media screen and (max-width: 362px) and (min-width: 231px) {
+        max-width: 55%;
+      }
+      @media screen and (max-width: 230px) {
+        max-width: 45%;
       }
     }
     &-logo {
@@ -134,9 +153,15 @@
     }
     &-website {
       font-weight: 600;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
     &-username {
       font-size: 13px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
     }
   }
 }

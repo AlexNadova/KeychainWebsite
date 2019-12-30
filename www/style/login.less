@@ -1,0 +1,112 @@
+// note: code for logins__container, logins__line nad logins__col are in loginsList.less
+
+.logins {
+  &__background {
+    background: @light-background;
+    height: 100%;
+    width: 100%;
+  }
+  &__card {
+    background: @lightest-background;
+    border: 0.5px solid @light-grey-e;
+    border-radius: 3px;
+    max-width: 450px;
+    margin: 20px 0 0 50px;
+    padding: 40px 20px 20px;
+    -webkit-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
+    -moz-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
+    box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
+    input {
+      border: none;
+      //   border-bottom: 1px solid @light-grey-a;
+      background-color: @lightest-background;
+      padding: 2px 5px 5px;
+      width: 90%;
+      font-size: 16px;
+      color: @font-color;
+    }
+  }
+  &__form {
+    &-item {
+      margin-bottom: 8px;
+      &-label {
+        width: 100%;
+        display: block;
+        text-align: left;
+        padding-left: 10px;
+        font-size: 14px;
+        color: @dark-grey-5;
+      }
+    }
+    &-buttons {
+      margin: 30px auto 10px;
+    }
+  }
+  &__button {
+    max-width: 100px;
+    display: inline-block;
+    width: 100%;
+    line-height: 27px;
+    color: white;
+    border: none;
+    border-radius: 1px;
+    text-decoration: none;
+    cursor: pointer;
+    background-color: @button-green;
+    &:hover {
+      background-color: @button-green-hover;
+      color: white;
+    }
+    &--red {
+      background-color: @button-red;
+      &:hover {
+        background-color: @button-red-hover;
+        color: white;
+      }
+    }
+    &--grey {
+      border: 1px solid @light-grey-a;
+      background-color: @lightest-background;
+      color: @font-color;
+      &:hover {
+        background-color: @dark-background;
+        border: 1px solid @light-grey-a;
+        color: @font-color;
+      }
+    }
+    &--update {
+      display: none;
+    }
+  }
+}
+.delete-window {
+  &__background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    opacity: 0.5;
+    background-color: black;
+    display: none;
+  }
+  &__container {
+    z-index: 1;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    bottom: 50%;
+    display: none;
+  }
+  &__line {
+    max-width: 300px;
+    width: 100%;
+    margin: 0 auto;
+    background-color: white;
+    height: 150px;
+  }
+  &__text {
+    padding: 40px 0 30px;
+  }
+}
