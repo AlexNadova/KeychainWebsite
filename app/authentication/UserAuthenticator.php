@@ -69,13 +69,13 @@ class UserAuthenticator implements IAuthenticator
 		//if 200, get token from response
 		$token = $response->success->token;
 		//get user by $token from API
-		$userData = $this->httpMethods->get($token, $this->route . '/user');
+		$data = $this->httpMethods->get($token, $this->route . '/user');
 		//get http code and response message
 		$httpCode = $data['info']['http_code'];
-		$response = $userData['response'];
+		$response = $data['response'];
 		//if 401 throw exception with error message
 		if ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
-			throw new AuthenticationException($response->error);
+			throw new AuthenticationException($response->message);
 		//if any code accept for 401 and 200 returned, throw exception
 		} elseif($httpCode !== HttpStatus::STATUS_OK) {
 			throw new AuthenticationException($httpCode . ': Something went wrong.');

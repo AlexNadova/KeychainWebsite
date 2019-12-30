@@ -63,9 +63,9 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 		$form->addProtection();
 		//add name, surname, email, password and c_password to form
 		$form->addText('name')->setRequired('Name is required')
-			->addRule(Form::PATTERN, 'PIN has to have 4 digits', '[a-zA-Zá-žÁ-Ž]{2,17}');;
+			->addRule(Form::PATTERN, 'Name has to have 2-17 letters.', '[a-zA-Zá-žÁ-Ž]{2,17}');
 		$form->addText('surname')->setRequired('Surname is required')
-			->addRule(Form::PATTERN, 'PIN has to have 4 digits', '[a-zA-Zá-žÁ-Ž]{2,17}');;
+			->addRule(Form::PATTERN, 'Surname has to have 2-17 letters.', '[a-zA-Zá-žÁ-Ž]{2,17}');
 		$form->addEmail('email')->setRequired('Email is required');
 		$form->addPassword('password')->setRequired('Password is required')->addRule(Form::PATTERN,
 			'Password has to contain at least one uppercase and one lowercase letter and one number.',
@@ -151,8 +151,8 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 			// $user->setExpiration('20 minutes');
 			//if exception is caught, access denied
 		} catch (Exception $e) {
-			$this->flashMessage($e, "denied");
-			$this->redirect("this");
+			$this->flashMessage('User could not be authenticated.', 'denied');
+			$this->redirect('this');
 		}
 		$this->flashMessage('Login successful.', 'success');
 		// redirect to user page

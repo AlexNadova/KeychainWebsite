@@ -50,7 +50,7 @@ class HttpMethods
 	}
 
 	/**
-	 *  post given $data to given $route, return response and info about response
+	 *  get request, return response and info about response
 	 *  @param string $token - token used in Authorization header needed to access API's functionalities
 	 *  @param string $route - string route that $data is sent to
 	 * 	@return array - array of response and info about response

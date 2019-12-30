@@ -27,38 +27,19 @@
 
 {block scripts}
 <script>
-	// function changeID(x) {
-	// 	if (x.matches) { // If media query matches
-	// 		$("#js-user-options").attr("id", "js-temp");
-	// 		$("#js-temp").show();
-	// 		console.log('1');
-	// 	}else{
-	// 		$("#js-temp").attr("id", "js-user-options");
-	// 		$("js-user-options").hide();
-	// 		console.log('2');
-	// 	}
-	// }
  	$(document).ready(function () {
-		// var x = window.matchMedia("(max-width: 363px)")
-		// changeID(x) // Call listener function at run time
-		// x.addListener(changeID) // Attach listener function on state changes
-
 		$("#js-user").hover(function () {
 			if($("#js-user-options").css("display") == "block"){
 				$("#js-user-options").hide();
-			console.log('3');
     		}else{
 				$("#js-user-options").show();
-			console.log('4');
 			}
 		});
 		$("#js-user-options").mouseenter(function () {
 			$("#js-user-options").show();
-			console.log('5');
 		});
 		$("#js-user-options").mouseleave(function () {
 			$("#js-user-options").hide();
-			console.log('6');
 		});
   	});
 </script>
