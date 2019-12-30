@@ -17,6 +17,9 @@ use stdClass;
  *  @author Alexandra Nadova <alexandranadova@gmail.com>
  *  @since 36: get all logins
  *  @since 35: get login by id: added code for single login page
+ *  @since 29: update login: update login code
+ *  @since 30: delete login: delete login code
+ * 
  */
 final class LoginsPresenter extends Nette\Application\UI\Presenter
 {
@@ -168,6 +171,8 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		return $form;
 	}
 
+	//----------------------------------------------UPDATE LOGIN----------------------------------------------
+
 	/**
 	 *  if login form was submitted successfully update login's data
 	 *  @param Form $form, Nette\Utils\ArrayHash $values
@@ -197,6 +202,32 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		} else {
 			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
 			$this->redirect('this');
+		}
+	}
+
+	//----------------------------------------------DELETE LOGIN----------------------------------------------
+
+	/**
+	 *  action method do delete login, called from login.latte 
+	 *  @param int $id - login's id
+	 * 	@return void
+	 *  @since 30: delete login
+	 */
+	public function actionDeleteLogin($id): void{
+		$user = $this->getUser();
+		$token = $user->getIdentity()->token;
+		$response = $this->httpMethods->delete($token, $this->route . '/' . $id);
+		$httpCode = $response['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$this->flashMessage('Login deleted.', 'success');
+			$this->redirect('Logins:default');
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+			$user->logout();
+			$this->flashMessage('You need to be logged in to access this page.', 'denied');
+			$this->redirect('Verification:default');
+		} else {
+			$this->flashMessage('Cannot render login.', 'error');
+			$this->redirect('Logins:default');
 		}
 	}
 }

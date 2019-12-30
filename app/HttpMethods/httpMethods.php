@@ -107,4 +107,33 @@ class HttpMethods
 
 		return $response;
 	}
+
+	/**
+	 *  delete request, return response and info about response
+	 *  @param string $token - token used in Authorization header needed to access API's functionalities
+	 *  @param string $route - string route that $data is sent to
+	 * 	@return array - array of response and info about response
+	 *  @see post function for more detailed documentation
+	 *  @since 30: delete login
+	 */
+	public function delete($token, $route): array
+	{
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $route);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		//add access token to headers
+		curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+			'Content-Type: application/json',
+			'Accept: application/json',
+			'Authorization: Bearer ' . $token
+		));
+		curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "DELETE");
+		
+		$response['response'] = curl_exec($ch);
+		$response['response'] = json_decode($response['response']);
+		$response['info'] = curl_getinfo($ch);
+		curl_close($ch);
+
+		return $response;
+	}
 }
