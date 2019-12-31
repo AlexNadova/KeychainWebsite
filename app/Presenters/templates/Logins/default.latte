@@ -12,6 +12,11 @@
 						<img class="logins__list-to-top-icon" src="{$basePath}/img/arrow-top.png" alt="">
 					</a>
 				</div>
+				<a n:href="Logins:createLogin" class="logins__list-item">
+					<div class="list-item__add-container" id="js-add-container">
+						<img class="list-item__add-btn" id="js-add-btn" src="{$basePath}/img/add-btn.png" alt="">
+					</div>
+				</a>
 				{foreach $logins as $login}
 					<a n:href="Logins:login id=>$login->id" class="logins__list-item">
 						<div class="list-item__col list-item__col--left">

@@ -23,7 +23,9 @@
 					<div class="logins__form-item">
 						<label n:name="password" class="logins__form-item-label">Password:</label>
 						<input n:name="password" type="password" id="js-password" class="password__input editable" value="{$login->password}" disabled/>
-						<!-- <img class="password__eye" src="{$basePath}/img/password-eye.png"> -->
+						<div class="progress__container progress__container--hidden">
+							<div id="js-progress-bar" class="progress__bar"></div>
+						</div> 
 						<div class="logins__button logins__button--grey" onclick="copyPassword()">Copy</div>
 						<div class="logins__button logins__button--grey" id="js-show-pswrd-btn" onclick="showPassword()">Show</div>
 					</div>
@@ -61,6 +63,7 @@
 <script>
  	function editMode() {
 		if($("#js-show-btn").html() === "EDIT"){
+			$(".progress__container").show();
 			$("#js-show-btn").html("CANCEL");
 			$("#js-show-btn").toggleClass('logins__button--grey');
 			$(".editable").attr("style", "border-bottom: 1px solid #aaa;");
@@ -68,6 +71,7 @@
 			$("#js-update-btn").prop('disabled', false);
 			$("#js-update-btn").show();
     	}else{
+			$(".progress__container").hide();
 			$("#js-show-btn").html("EDIT");
 			$("#js-show-btn").toggleClass('logins__button--grey');
 			$(".editable").attr("style", "border-bottom: none;");
@@ -99,5 +103,34 @@
 		password.setSelectionRange(0, 99999)
 		document.execCommand("copy");
 	}
+	$(document).ready(function() {
+		jQuery(function() {
+			jQuery("#js-password").keyup(function() {
+				jQuery.strength(jQuery("#js-progress-bar"), jQuery(this).val());
+			});
+		});
+    });
+	jQuery.strength = function( element, password ) {
+        var desc = [{'width':'0px'}, {'width':'20%'}, {'width':'40%'}, {'width':'60%'}, {'width':'80%'}, {'width':'100%'}];
+        var descClass = ['', 'progress__bar--danger', 'progress__bar--danger', 'progress__bar--warning', 'progress__bar--success', 'progress__bar--success'];
+		var score = 0;
+		
+        if(password.length > 6){
+            score++;
+        }
+        if ((password.match(/[a-z]/)) && (password.match(/[A-Z]/))){
+            score++;
+        }
+        if(password.match(/\d+/)){
+            score++;
+        }
+        if(password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)){
+            score++;
+        }
+        if (password.length > 10){
+            score++;
+		}
+        element.removeClass( descClass[score-1] ).addClass( descClass[score] ).css( desc[score] );
+    };
 </script>
 {/block}

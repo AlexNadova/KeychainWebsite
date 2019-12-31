@@ -1,0 +1,84 @@
+{block content}
+<div class="logins__container">
+	<div class="logins__line">
+		<div class="logins__col logins__col--left">
+			{include '../headerLeft.latte'}
+		</div>
+    	<div class="logins__col logins__col--right">
+			{include '../headerTop.latte'}
+			<div class="logins__card">
+				<form n:name="createLoginForm" class="logins__form">
+					<div class="logins__form-item">
+						<label n:name="websiteName" class="logins__form-item-label">Website name:</label>
+						<input n:name="websiteName" type="text"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="websiteAddress" class="logins__form-item-label">Website address:</label>
+						<input n:name="websiteAddress" type="text" placeholder="e.g. https://..."/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="username" class="logins__form-item-label">Username:</label>
+						<input n:name="username" type="text"/>
+					</div>
+					<div class="logins__form-item">
+						<label n:name="password" class="logins__form-item-label">Password:</label>
+						<input n:name="password" type="password" id="js-password"/>
+						<img class="login__password-eye" src="{$basePath}/img/password-eye.png" onclick="showPassword()">
+						<div class="progress__container">
+							<div id="js-progress-bar" class="progress__bar"></div>
+						</div> 
+					</div>
+					<div class="logins__form-buttons">
+						<button n:name="create" id="js-update-btn" class="button logins__button">ADD</button>
+					</div>
+				</form>
+			</div>
+		</div>
+  	</div>
+</div>
+{/block}
+
+{block scripts}
+<script>
+	function showPassword() {
+		if($("#js-show-pswrd-btn").html() === "SHOW"){
+			$("#js-show-pswrd-btn").html("HIDE");
+        	$("#js-password").prop("type", "password");
+    	}else{
+			$("#js-show-pswrd-btn").html("SHOW");
+        	$("#js-password").prop("type", "text");
+		}
+	}
+	// from https://stackoverflow.com/a/53967213
+	$(document).ready(function() {
+		jQuery(function() {
+			jQuery("#js-password").keyup(function() {
+				jQuery.strength(jQuery("#js-progress-bar"), jQuery(this).val());
+			});
+		});
+    });
+	jQuery.strength = function( element, password ) {
+        var desc = [{'width':'0px'}, {'width':'20%'}, {'width':'40%'}, {'width':'60%'}, {'width':'80%'}, {'width':'100%'}];
+        var descClass = ['progress__bar--danger', 'progress__bar--danger', 'progress__bar--danger', 'progress__bar--warning', 'progress__bar--success', 'progress__bar--success'];
+        var score = 0;
+        if(password.length > 6){
+            score++;
+        }
+        if ((password.match(/[a-z]/)) && (password.match(/[A-Z]/))){
+            score++;
+        }
+        if(password.match(/\d+/)){
+            score++;
+        }
+        if(password.match(/.[!,@,#,$,%,^,&,*,?,_,~,-,(,)]/)){
+            score++;
+        }
+        if (password.length > 10){
+            score++;
+		}
+		console.log(score);
+		
+        element.removeClass( descClass[score-1] ).removeClass( descClass[score+1] ).addClass( descClass[score] ).css( desc[score] );
+    };
+</script>
+{/block}
