@@ -1,5 +1,5 @@
 // note: code for logins__container, logins__line nad logins__col are in loginsList.less
-
+// this file contains styles for login page (with update) and creatae login page
 .logins {
   &__background {
     background: @light-background;
@@ -16,9 +16,18 @@
     -webkit-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
     -moz-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
     box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
+    @media screen and (max-width: 800px) and (min-width: 731px) {
+      margin: 20px auto;
+    }
+    @media screen and (max-width: 730px) and (min-width: 364px) {
+      margin: 20px;
+    }
+    @media screen and (max-width: 363px) {
+      margin: 10px;
+    }
+
     input {
       border: none;
-      //   border-bottom: 1px solid @light-grey-a;
       background-color: @lightest-background;
       padding: 2px 5px 5px;
       width: 90%;
@@ -52,18 +61,18 @@
     border-radius: 1px;
     text-decoration: none;
     cursor: pointer;
-	background-color: @button-green;
-	border: 1px solid @green-color;
+    background-color: @button-green;
+    border: 1px solid @green-color;
     &:hover {
-	  background-color: @button-green-hover;
-	  border: 1px solid @button-green-hover;
+      background-color: @button-green-hover;
+      border: 1px solid @button-green-hover;
       color: white;
     }
     &--red {
-	  background-color: @button-red;
-	  border: 1px solid @red-color;
+      background-color: @button-red;
+      border: 1px solid @red-color;
       &:hover {
-		background-color: @button-red-hover;
+        background-color: @button-red-hover;
         border: 1px solid @button-red-hover;
         color: white;
       }
@@ -112,5 +121,45 @@
   }
   &__text {
     padding: 40px 0 30px;
+  }
+}
+
+.login__password-eye {
+  position: relative;
+  z-index: 1;
+  width: 17px;
+  height: 11px;
+  cursor: pointer;
+  float: left;
+  top: 8px;
+  right: -5px;
+}
+
+.progress {
+  &__container {
+    height: 10px;
+    width: 100%;
+    margin: 10px auto;
+    border-radius: 50px;
+    // border: 2px solid #ddd;
+    &--hidden {
+      display: none;
+    }
+  }
+  &__bar {
+    width: 0%;
+    height: 100%;
+    transition: width 500ms linear;
+    border-radius: 50px;
+    box-shadow: 0px 1px 5px #555;
+    &--danger {
+      background: @red-color;
+    }
+    &--warning {
+      background: @orange-color;
+    }
+    &--success {
+      background: @green-color;
+    }
   }
 }

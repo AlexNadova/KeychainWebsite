@@ -29,8 +29,8 @@
       color: white;
       background-color: @dark-blue-background;
       border-right: 0.2px solid @light-grey-a;
-	  position: fixed;
-	  font-size: 16px;
+      position: fixed;
+      font-size: 16px;
       @media screen and (max-width: 525px) {
         max-width: 170px;
         display: none;
@@ -43,8 +43,11 @@
       padding: 3px 10px 8px 25px;
     }
     &__item {
-      padding: 3px 10px 3px 25px;
-      cursor: pointer;
+	  padding: 3px 10px 3px 25px;
+	  text-decoration: none;
+	  color: white;
+	  cursor: pointer;
+	  display: block;
       &-user {
         padding: 3px 10px 3px 30px;
       }
@@ -134,8 +137,8 @@
         }
         &-email {
           display: inline-block;
-		  margin: 24px 4% 24px 10%;
-		  font-size: 16px;
+          margin: 24px 4% 24px 10%;
+          font-size: 16px;
           @media screen and (max-width: 847px) {
             display: none;
           }
@@ -164,8 +167,8 @@
           top: 60px;
           -webkit-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
           -moz-box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
-		  box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
-		  z-index: 1;
+          box-shadow: 5px 5px 10px -5px rgba(148, 148, 148, 1);
+          z-index: 1;
           @media screen and (max-width: 635px) and (min-width: 526px) {
             right: 10px;
           }
