@@ -19,7 +19,7 @@ use stdClass;
  *  @since 35: get login by id: added code for single login page
  *  @since 29: update login: update login code
  *  @since 30: delete login: delete login code
- * 
+ *  @since 5: create new login: create login code
  */
 final class LoginsPresenter extends Nette\Application\UI\Presenter
 {
@@ -228,6 +228,73 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		} else {
 			$this->flashMessage('Cannot render login.', 'error');
 			$this->redirect('Logins:default');
+		}
+	}
+
+	//----------------------------------------------CREATE LOGIN----------------------------------------------
+
+	/**
+	 *  render create login page
+	 *  @since 5: create new login
+	 * 	@return void
+	 */
+	public function renderCreateLogin(): void
+	{
+		$user = $this->getUser();
+		$this->template->email = $user->getIdentity()->email;
+	}
+
+	/**
+	 *  create form for adding login
+	 * 	@return Form
+	 *  @since 5: create new login
+	 */
+	public function createComponentCreateLoginForm(): Form
+	{
+		$form = new Form();
+		//CSRF protection
+		$form->addProtection();
+		$form->addText('websiteName')->setRequired('Website name is required')
+			->addRule(Form::MAX_LENGTH, 'Website name can have maximum of 30 characters.', 30);
+		$form->addText('websiteAddress')->setRequired('Website address is required')
+			->addRule(Form::MAX_LENGTH, 'Website address can have maximum of 255 characters.', 255);
+		$form->addText('username')->setRequired('Username is required')
+			->addRule(Form::MAX_LENGTH, 'Username can have maximum of 45 characters.', 45);
+		$form->addText('password')->setRequired('Password is required')
+			->addRule(Form::MAX_LENGTH, 'Password can have maximum of 45 characters.', 45);
+		$form->addSubmit('create', 'ADD');
+		$form->onSuccess[] = array($this, 'createLoginFormSuccess');
+		return $form;
+	}
+
+	/**
+	 *  if login form was submitted successfully create new login
+	 *  @param Form $form, Nette\Utils\ArrayHash $values
+	 * 	@return void
+	 *  @since 5: create new login
+	 */
+	public function createLoginFormSuccess(Form $form, $values): void
+	{
+		$user = $this->getUser();
+		$token = $user->getIdentity()->token;
+
+		$newLogin = array(
+			'website_name' => $values->websiteName,
+			'website_address' => $values->websiteAddress,
+			'username' => $values->username,
+			'password' => $values->password,
+		);
+		$data = $this->httpMethods->post($newLogin, $this->route, $token);
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_CREATED) {
+			$this->flashMessage($httpCode . ': Login created.', 'success');
+			$this->redirect('Logins:default');
+		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
+			$this->flashMessage($httpCode . ': ' . json_decode($data['response']->errors), 'error');
+			$this->redirect('this');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('this');
 		}
 	}
 }

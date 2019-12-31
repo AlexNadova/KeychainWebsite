@@ -21,8 +21,9 @@ class HttpMethods
 	 *  @param string $route - string route that $data is sent to
 	 * 	@return array - array of response and info about response
 	 *  @since 37:register to account
+	 *  @since 5: create new login: added $token and authorization header
 	 */
-	public function post($data, $route): array
+	public function post($data, $route, $token=null): array
 	{
 		//array to json
 		$jsonData = json_encode($data);
@@ -40,6 +41,14 @@ class HttpMethods
 			'Content-Length: ' . strlen($jsonData),
 			'Accept: application/json'
 		));
+		if(!is_null($token)){
+			curl_setopt($ch, CURLOPT_HTTPHEADER, array(
+				'Content-Type: application/json',
+				'Content-Length: ' . strlen($jsonData),
+				'Accept: application/json',
+				'Authorization: Bearer ' . $token
+			));
+		}
 		//execute cURL request and save result and decode it
 		$response['response'] = curl_exec($ch);
 		$response['response'] = json_decode($response['response']);
