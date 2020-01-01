@@ -158,4 +158,31 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 		// redirect to user page
 		$this->redirect('Logins:default');
 	}
+
+	//--------------------------------------------LOGOUT--------------------------------------------
+
+	/**
+	 *  action to log out user from website and API
+	 * 	@return void
+	 *  @since 59: logout
+	 */
+	public function actionLogout(): void{
+		$user = $this->getUser();
+		$token = $user->getIdentity()->token;
+		$data = $this->httpMethods->delete($token, $this->route . '/logout');
+		//get http code from response
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$user->logout();
+			$this->flashMessage('You have been successfully logged out.', 'success');
+			$this->redirect('Verification:default');
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+			$user->logout();
+			$this->flashMessage('You have been logged out.', 'info');
+			$this->redirect('Verification:default');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('this');
+		}
+	}
 }
