@@ -20,13 +20,32 @@
 	<div class="header-top__section-user-options" id="js-user-options">
 		<div class="header-top__section-user-options-email">{$email}</div>
 		<a n:href="User:profile" class="header-top__section-user-options-item header-top__section-user-options-profile">Profile</a>
+		<div onclick="showDeleteWindow()" class="header-top__section-user-options-item header-top__section-user-options-delete">Delete account</div>
 		<a n:href="Verification:logout" class="header-top__section-user-options-item header-top__section-user-options-logout">Logout</a>
+	</div>
+</div>
+<div class="delete-user-window__background" id="js-delete-user-bg"></div>
+<div class="delete-user-window__container" id="js-delete-user-modal">
+	<div class="delete-user-window__line">
+		<div class="delete-user-window__text">
+			Do you really wish do delete your account?
+		</div>
+		<a n:href="User:deleteAccount" class="profile__button profile__button--red">DELETE</a>
+		<div class="profile__button profile__button--grey" onclick="hideDeleteWindow()">CANCEL</div>
 	</div>
 </div>
 {/block}
 
 {block scripts}
 <script>
+	function showDeleteWindow(){
+		$("#js-delete-user-bg").show();
+		$("#js-delete-user-modal").show();
+	}
+	function hideDeleteWindow(){
+		$("#js-delete-user-modal").hide();
+		$("#js-delete-user-bg").hide();
+	}
  	$(document).ready(function () {
 		$("#js-user").hover(function () {
 			if($("#js-user-options").css("display") == "block"){

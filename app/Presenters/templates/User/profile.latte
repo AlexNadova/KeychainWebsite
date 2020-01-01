@@ -30,11 +30,13 @@
 					<form n:name="passwordForm" class="profile__form">
 						<div class="profile__form-item">
 							<label n:name="password" class="profile__form-item-label">Password:</label>
-							<input n:name="password" type="password" id="js-password"/>
+							<input n:name="password" type="password" id="js-password-1"/>
+							<img class="login__password-eye" src="{$basePath}/img/password-eye.png" onclick="showPassword('1')">
 						</div>
 						<div class="profile__form-item">
 							<label n:name="c_password" class="profile__form-item-label">Repeat password:</label>
-							<input n:name="c_password" type="password"/>
+							<input n:name="c_password" type="password" id="js-password-2"/>
+							<img class="login__password-eye" src="{$basePath}/img/password-eye.png" onclick="showPassword('2')">
 						</div>
 						<div class="progress__container">
 							<div id="js-progress-bar" class="progress__bar"></div>
@@ -60,16 +62,6 @@
 		</div>
   	</div>
 </div>
-<!-- <div class="delete-window__background" id="js-delete-bg"></div>
-<div class="delete-window__container" id="js-delete-modal">
-	<div class="delete-window__line">
-		<div class="delete-window__text">
-			Do you really wish do delete this item?
-		</div>
-		<a n:href="profile:deleteLogin id=>$login->id" class="profile__button profile__button--red">DELETE</a>
-		<div class="profile__button profile__button--grey" onclick="hideDeleteWindow()">CANCEL</div>
-	</div>
-</div> -->
 {/block}
 
 {block scripts}
@@ -93,33 +85,15 @@
 			$("#js-update-btn-"+id).prop('disabled', true);
 		}
 	}
-	// function showPassword() {
-	// 	if($("#js-show-pswrd-btn").html() === "SHOW"){
-	// 		$("#js-show-pswrd-btn").html("HIDE");
-    //     	$("#js-password").prop("type", "password");
-    // 	}else{
-	// 		$("#js-show-pswrd-btn").html("SHOW");
-    //     	$("#js-password").prop("type", "text");
-	// 	}
-	// }
-	// function showDeleteWindow(){
-	// 	$("#js-delete-bg").show();
-	// 	$("#js-delete-modal").show();
-	// }
-	// function hideDeleteWindow(){
-	// 	$("#js-delete-modal").hide();
-	// 	$("#js-delete-bg").hide();
-	// }
-	// function copyPassword(){
-	// 	var password = document.getElementById("js-password");
-	// 	$(".editable").prop('disabled', false);
-	// 	$("#js-password").prop("type", "text");
-	// 	password.select();
-	// 	password.setSelectionRange(0, 99999)
-	// 	document.execCommand("copy");
-	// 	$(".editable").prop('disabled', true);
-	// 	$("#js-password").prop("type", "password");
-	// }
+
+	function showPassword(id) {
+		if($("#js-password-"+id).prop("type") === "text"){
+        	$("#js-password-"+id).prop("type", "password");
+    	}else{
+        	$("#js-password-"+id).prop("type", "text");
+		}
+	}
+
 	$(document).ready(function() {
 		jQuery(function() {
 			jQuery("#js-password").keyup(function() {

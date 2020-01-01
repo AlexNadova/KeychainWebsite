@@ -44,11 +44,9 @@
 {block scripts}
 <script>
 	function showPassword() {
-		if($("#js-show-pswrd-btn").html() === "SHOW"){
-			$("#js-show-pswrd-btn").html("HIDE");
+		if($("#js-password").prop("type") === "text"){
         	$("#js-password").prop("type", "password");
     	}else{
-			$("#js-show-pswrd-btn").html("SHOW");
         	$("#js-password").prop("type", "text");
 		}
 	}

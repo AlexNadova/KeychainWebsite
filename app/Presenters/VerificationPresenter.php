@@ -20,6 +20,8 @@ use App\UserAuthenticator;
  *  @since 37:register to account
  *  @since 38:login to account: login code added
  *  @since 57:headers: added actionVerification() function
+ *  @since 59:logout: code for logout
+ * 
  */
 final class VerificationPresenter extends Nette\Application\UI\Presenter
 {

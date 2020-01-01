@@ -15,6 +15,7 @@ use App\HttpMethods\HttpMethods;
  * 
  *  @author Alexandra Nadova <alexandranadova@gmail.com>
  *  @since 39: edit account
+ *  @since 24: delete account: code for deleting account
  */
 final class UserPresenter extends Nette\Application\UI\Presenter
 {
@@ -51,6 +52,8 @@ final class UserPresenter extends Nette\Application\UI\Presenter
 		}
 		$this->template->user = $response['response']->data;
 	}
+
+	//----------------------------------------------UPDATE USER----------------------------------------------
 
 	/**
 	 *  form for updating name and surname
@@ -169,6 +172,33 @@ final class UserPresenter extends Nette\Application\UI\Presenter
 		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
 			$this->flashMessage($httpCode . ': ' . json_decode($data['response']->errors), 'error');
 			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+			$user->logout();
+			$this->flashMessage('You have been logged out.', 'info');
+			$this->redirect('Verification:default');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('this');
+		}
+	}
+
+	//----------------------------------------------DELETE ACCOUNT----------------------------------------------
+
+	/**
+	 *  action to delete user account
+	 * 	@return void
+	 *  @since 24: delete account
+	 */
+	public function actionDeleteAccount(): void{
+		$user = $this->getUser();
+		$token = $user->getIdentity()->token;
+		$data = $this->httpMethods->delete($token, $this->route . '/user');
+		//get http code from response
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$user->logout();
+			$this->flashMessage('Your account has been deleted.', 'success');
+			$this->redirect('Verification:default');
 		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			$user->logout();
 			$this->flashMessage('You have been logged out.', 'info');
