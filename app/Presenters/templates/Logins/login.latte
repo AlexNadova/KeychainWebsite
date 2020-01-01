@@ -1,4 +1,7 @@
 {block content}
+{block title}
+	<title>Login</title>
+{/block}
 <div class="logins__container">
 	<div class="logins__line">
 		<div class="logins__col logins__col--left">
@@ -99,9 +102,13 @@
 	}
 	function copyPassword(){
 		var password = document.getElementById("js-password");
+		$(".editable").prop('disabled', false);
+		$("#js-password").prop("type", "text");
 		password.select();
 		password.setSelectionRange(0, 99999)
 		document.execCommand("copy");
+		$(".editable").prop('disabled', true);
+		$("#js-password").prop("type", "password");
 	}
 	$(document).ready(function() {
 		jQuery(function() {

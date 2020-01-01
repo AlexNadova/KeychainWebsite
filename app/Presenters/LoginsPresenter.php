@@ -91,7 +91,7 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 			return $logins;
 		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			$user->logout();
-			$this->flashMessage('You need to be logged in to access this page.', 'denied');
+			$this->flashMessage('You have been logged out.', 'info');
 			$this->redirect('Verification:default');
 		} else {
 			return [];
@@ -138,7 +138,7 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 			return $login;
 		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
 			$user->logout();
-			$this->flashMessage('You need to be logged in to access this page.', 'denied');
+			$this->flashMessage('You have been logged out.', 'info');
 			$this->redirect('Verification:default');
 		} else {
 			$this->flashMessage('Cannot render login.', 'error');
@@ -199,6 +199,10 @@ final class LoginsPresenter extends Nette\Application\UI\Presenter
 		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
 			$this->flashMessage($httpCode . ': ' . json_decode($data['response']->errors), 'error');
 			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+			$user->logout();
+			$this->flashMessage('You have been logged out.', 'info');
+			$this->redirect('Verification:default');
 		} else {
 			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
 			$this->redirect('this');
