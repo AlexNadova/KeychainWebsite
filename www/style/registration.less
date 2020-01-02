@@ -71,6 +71,9 @@
   }
   &__form {
     padding: 0 15px;
+    &-pswrd-reset {
+      display: none;
+    }
   }
   &__form-item {
     margin-bottom: 4px;
@@ -104,6 +107,14 @@
       background: @button-green-hover;
       border: 1px solid @button-green-hover;
       color: white;
+    }
+  }
+  &__reset-pswrd {
+    text-align: right;
+    padding: 0 20px;
+    cursor: pointer;
+    &:hover {
+      color: @button-green;
     }
   }
 }

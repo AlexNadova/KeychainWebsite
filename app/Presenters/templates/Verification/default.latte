@@ -47,6 +47,14 @@
 				</div>
 				<button n:name="login" class="button registration__button">LOGIN</button>
 			</form>
+			<div class="registration__reset-pswrd" id="js-reset-password-btn" onclick="showResetPasswordForm()">Reset password</div>
+			<form n:name="emailAddressForm" class="registration__form registration__form-pswrd-reset" id="js-reset-password">
+				<div class="registration__form-item">
+					<label n:name="email" class="registration__item-label">Your email:</label>
+					<input n:name="email" type="email" title="Email is required."/>
+				</div>
+				<button n:name="reset" class="button registration__button">RESET PASSWORD</button>
+			</form>
 		</div>
     </div>
 </div>
@@ -55,6 +63,15 @@
 
 {block scripts}
 <script>
+	function showResetPasswordForm(){
+		if($("#js-reset-password").css("display") == "block"){
+				$("#js-reset-password").hide();
+				$("#js-reset-password-btn").show();
+    		}else{
+				$("#js-reset-password").show();
+				$("#js-reset-password-btn").hide();
+			}
+	}
  	$(document).ready(function () {
     	$(".password__eye").mousedown(function () {
         	$(".password__input").prop("type", "text");

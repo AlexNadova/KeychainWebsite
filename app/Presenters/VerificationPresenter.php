@@ -21,7 +21,7 @@ use App\UserAuthenticator;
  *  @since 38:login to account: login code added
  *  @since 57:headers: added actionVerification() function
  *  @since 59:logout: code for logout
- * 
+ *  @since 54:reset password: code for sending email address
  */
 final class VerificationPresenter extends Nette\Application\UI\Presenter
 {
@@ -185,6 +185,104 @@ final class VerificationPresenter extends Nette\Application\UI\Presenter
 		} else {
 			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
 			$this->redirect('this');
+		}
+	}
+
+	//--------------------------------------------RESET PASSWORD - SEND EMAIL--------------------------------------------
+
+	/**
+	 *  Form for user's email where he receives reset password link
+ 	 *  @since 54: reset password
+	 * 	@return Form
+	 */
+	public function createComponentEmailAddressForm(): Form
+	{
+		$form = new Form();
+		$form->addProtection();
+		$form->addEmail('email')->setRequired('Email is required');
+		$form->addSubmit('reset', 'RESET PASSWORD');
+		$form->onSuccess[] = array($this, 'emailAddressFormSuccess');
+		return $form;
+	}
+
+	/**
+	 *  If email form was submitted successfully
+ 	 *  @since 54: reset password
+	 *  @param Form $form, Nette\Utils\ArrayHash $values
+	 * 	@return void
+	 */
+	public function emailAddressFormSuccess(Form $form, $values): void
+	{
+		$data = array(
+			'email' => $values->email,
+			'url' => 'http://localhost:81/keychain_website/www/verification/password-reset'
+		);
+		$data = $this->httpMethods->post($data, $this->route . '/password/create');
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$this->flashMessage('Reset password email has been sent to your email address.', 'success');
+			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
+			$this->flashMessage($httpCode . ': ' . $data['response'], 'error');
+			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_BAD_REQUEST && $data['response']->error = 'We cannot find a user with that e-mail address.') {
+			$this->flashMessage($data['response']->error, 'error');
+			$this->redirect('this');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('this');
+		}
+	}
+
+	/**
+	 *  form for reseting password
+	 *  @since 54: reset password
+	 *  @return Form
+	 */
+	public function createComponentResetPasswordForm(): Form
+	{
+		$form = new Form();
+		$form->addProtection();
+		$form->addHidden('token')->setRequired('Password is required')->setValue($this->getParameter('token'));
+		$form->addPassword('password')->setRequired('Password is required')->addRule(Form::PATTERN,
+			'Password has to contain at least one uppercase and one lowercase letter and one number.',
+			'^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$'
+		);
+		$form->addPassword('c_password')->setRequired('Password repeat is required')
+			->addRule(Form::PATTERN, 'Password repeat has to match password.', $form['password']);
+		$form->addSubmit('reset', 'RESET PASSWORD');
+		$form->onSuccess[] = array($this, 'passwordFormSuccess');
+		return $form;
+	}
+
+	/**
+	 *  if reset password form was successfully submitted
+	 *  @since 54: reset password
+	 *  @param Form $form, $values - input values
+	 *  @return void
+	 */
+	public function passwordFormSuccess(Form $form, $values): void
+	{
+		$user = [
+			'password' => $values->password,
+			'c_password' => $values->c_password,
+			'token' => $values->token,
+		];
+		$data = $this->httpMethods->post($user, $this->route.'/password/reset');
+		// dump($this->token, $data, $user);exit();
+		$httpCode = $data['info']['http_code'];
+		if ($httpCode === HttpStatus::STATUS_OK) {
+			$this->flashMessage($httpCode . ': Password reset successful. Proceed with login.', 'success');
+			$this->redirect('Verification:default');
+		} elseif ($httpCode === HttpStatus::STATUS_UNPROCESSABLE_ENTITY) {
+			$this->flashMessage($httpCode . ': ' . json_decode($data['response']->errors), 'error');
+			$this->redirect('this');
+		} elseif ($httpCode === HttpStatus::STATUS_UNAUTHORIZED) {
+			$this->flashMessage('Token is invalid.', 'info');
+			$this->redirect('Verification:default');
+		} else {
+			$this->flashMessage($httpCode . ': Something went wrong.', 'error');
+			$this->redirect('Verification:default');
 		}
 	}
 }

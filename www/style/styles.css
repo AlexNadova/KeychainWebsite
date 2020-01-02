@@ -447,6 +447,9 @@ input:focus:invalid {
 .registration__form {
   padding: 0 15px;
 }
+.registration__form-pswrd-reset {
+  display: none;
+}
 .registration__form-item {
   margin-bottom: 4px;
 }
@@ -480,6 +483,14 @@ input:focus:invalid {
   background: #108145;
   border: 1px solid #108145;
   color: white;
+}
+.registration__reset-pswrd {
+  text-align: right;
+  padding: 0 20px;
+  cursor: pointer;
+}
+.registration__reset-pswrd:hover {
+  color: #1ba75b;
 }
 .logins__container {
   max-width: 1700px;
@@ -966,4 +977,81 @@ input:focus:invalid {
 }
 .profile__button--update {
   display: none;
+}
+.reset-password__container {
+  width: 100%;
+  height: 100%;
+  padding: 10% 0;
+}
+.reset-password__card {
+  background: #f9f9f9;
+  border: 0.5px solid #eee;
+  border-radius: 3px;
+  max-width: 350px;
+  margin: 0 auto;
+  padding: 20px;
+  width: 100%;
+  -webkit-box-shadow: 5px 5px 10px -5px #949494;
+  -moz-box-shadow: 5px 5px 10px -5px #949494;
+  box-shadow: 5px 5px 10px -5px #949494;
+}
+@media screen and (max-width: 730px) {
+  .reset-password__card {
+    margin: 20px auto 15px;
+    float: none;
+    max-width: 80%;
+  }
+}
+@media screen and (min-width: 731px) {
+  .reset-password__card-container {
+    margin: 20px 0 0 50px;
+  }
+}
+.reset-password__card input {
+  border: none;
+  background-color: #f9f9f9;
+  padding: 2px 5px 5px;
+  width: 90%;
+  font-size: 16px;
+  color: #272727;
+}
+.reset-password__form-item {
+  margin-bottom: 8px;
+}
+.reset-password__form-item-label {
+  width: 100%;
+  display: block;
+  text-align: left;
+  padding-left: 10px;
+  font-size: 14px;
+  color: #555;
+}
+.reset-password__form-buttons {
+  margin: 10px auto 0;
+}
+.reset-password__button {
+  display: block;
+  width: 100%;
+  line-height: 27px;
+  color: white;
+  border-radius: 1px;
+  text-decoration: none;
+  cursor: pointer;
+  background-color: #1ba75b;
+  border: 1px solid #1ba75b;
+}
+.reset-password__button:hover {
+  background-color: #108145;
+  border: 1px solid #108145;
+  color: white;
+}
+.reset-password__password-eye {
+  position: relative;
+  z-index: 1;
+  width: 17px;
+  height: 11px;
+  cursor: pointer;
+  float: left;
+  top: 8px;
+  right: 5px;
 }
